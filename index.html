@@ -66,6 +66,12 @@
 .harley-page td:first-child{font-weight:700;color:var(--rose)}
 .harley-page .measurement{font-weight:650}.harley-page .inch{display:block;color:var(--muted);font-size:12px;margin-top:2px}
 .harley-page .harley-note{margin:16px 0 0;padding:13px 15px;border-left:4px solid var(--rose);border-radius:0 8px 8px 0;background:#fff8f4;color:var(--muted);font-size:13px;line-height:1.65}
+.pattern-notes{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:12px;background:#fffdf9eF}
+.pattern-notes label{display:block;margin-bottom:4px;font-size:18px;font-weight:650;color:var(--ink)}
+.pattern-notes .notes-help{margin:0 0 10px;color:var(--muted);font-size:13px}
+.pattern-notes textarea{display:block;width:100%;min-height:150px;resize:vertical;padding:13px 14px;border:1px solid #d8cac4;border-radius:9px;background:#fff;color:var(--ink);font:inherit;line-height:1.65;outline:none}
+.pattern-notes textarea:focus{border-color:var(--rose);box-shadow:0 0 0 3px #9e596418}
+.notes-status{display:block;min-height:20px;margin-top:7px;color:var(--muted);font-size:12px;text-align:right}
 @media(max-width:680px){.harley-page{padding:16px}.harley-head{grid-template-columns:1fr 78px}.harley-thumb{width:78px;height:110px}.harley-watermark{right:-80px}}
 </style>
 </head>
@@ -115,6 +121,12 @@
       </tbody>
     </table></div>
     <p class="harley-note"><strong>วิธีคำนวณ:</strong> ขนาดสรีระมาตรฐานของ VikiSews + ค่าความหลวมที่แสดงในแพตเทิร์น Harley ของแต่ละไซซ์ ขนาดจริงอาจคลาดเคลื่อนเล็กน้อยจากการเย็บ การรีด และชนิดผ้า · <a href="https://vikisews.com/vykrojki/platja-i-sarafany/harli-plate/" target="_blank">เปิดหน้าแพตเทิร์น Harley</a></p>
+    <div class="pattern-notes">
+      <label for="harleyNotes">โน้ตเกี่ยวกับแพตเทิร์น</label>
+      <p class="notes-help">จดการปรับแพตเทิร์น ไซซ์ที่เลือก ชนิดผ้า หรือรายละเอียดการเย็บ — ระบบบันทึกให้อัตโนมัติในเบราว์เซอร์นี้</p>
+      <textarea id="harleyNotes" placeholder="ตัวอย่าง: เลือกไซซ์ 46 แต่เพิ่มสะโพก 1 ซม. / ใช้ผ้าทวีด 1.8 เมตร…"></textarea>
+      <span id="harleyNotesStatus" class="notes-status" aria-live="polite"></span>
+    </div>
   </section>
   <div class="tools" style="display: none;"><input id="q" placeholder="ค้นหาชื่อสินค้า…"><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button><span class="count" id="count">หน้า 0 • โครงสร้างไซส์</span></div>
   <div class="wrap" style="display: none;"><table>
@@ -185,6 +197,12 @@ function cell(s){return s?`${s} ซม.<br><span style="color:#756d69">(${inches
 function setPage(n){activePage=n;[0,1,2,3,4].forEach(i=>document.querySelector('#page'+i)?.classList.toggle('active',n===i));var sr=document.querySelector('#sizeRef');var hp=document.querySelector('#harleyPage');sr.style.display=n===0?'':'none';hp.style.display=n===4?'block':'none';if(n===0||n===4){document.querySelector('.tools').style.display='none';document.querySelector('.wrap').style.display='none';document.querySelector('#count').textContent=n===0?'หน้า 0 • โครงสร้างไซส์':'หน้า 4 • Harley Dress';}else{document.querySelector('.tools').style.display='';document.querySelector('.wrap').style.display='';render(document.querySelector('#q').value);}window.scrollTo({top:0,behavior:'smooth'});}
 function render(filter=''){const f=filter.trim().toLowerCase(); const list=[products1,products2,products3][activePage-1]; const data=list.filter(p=>p[0].toLowerCase().includes(f)); document.querySelector('#rows').innerHTML=data.map(p=>{const href=activePage===1?base+p[1]+'/':'https://vikisews.com/vykrojki/'+p[1]+'/';const imageSrc=p[2].startsWith('data:')?p[2]:imgBase+p[2];return `<tr><td class="photo"><img loading="lazy" src="${imageSrc}" alt="${p[0]}"></td><td class="name"><a href="${href}" target="_blank">${p[0]}</a><small>${p[1]}</small></td><td class="num">${cell(p[3])}</td><td class="num">${cell(p[4])}</td><td class="num">${cell(p[5])}</td><td class="num">${cell(p[6])}</td></tr>`}).join(''); document.querySelector('#count').textContent=`หน้า ${activePage} • ${data.length} รายการ`;}
 document.querySelector('#q').addEventListener('input',e=>render(e.target.value)); setPage(3);
+const harleyNotes=document.querySelector('#harleyNotes');
+const harleyNotesStatus=document.querySelector('#harleyNotesStatus');
+const harleyNotesKey='vikisews-notes:harley-dress';
+try{harleyNotes.value=localStorage.getItem(harleyNotesKey)||'';}catch(error){harleyNotesStatus.textContent='เบราว์เซอร์นี้ไม่อนุญาตให้บันทึกโน้ต';}
+let harleyNotesTimer;
+harleyNotes.addEventListener('input',()=>{harleyNotesStatus.textContent='กำลังบันทึก…';clearTimeout(harleyNotesTimer);harleyNotesTimer=setTimeout(()=>{try{localStorage.setItem(harleyNotesKey,harleyNotes.value);harleyNotesStatus.textContent='บันทึกแล้ว';}catch(error){harleyNotesStatus.textContent='บันทึกไม่ได้ในเบราว์เซอร์นี้';}},350);});
 </script>
 </body></html>
 
