@@ -4,6 +4,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>ตารางเผื่อหลวม VikiSews — สินค้าจากแท็บที่เปิด</title>
   <link rel="icon" type="image/png" sizes="192x192" href="pattern-favicon.png">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root{--ink:#2b2525;--muted:#756d69;--paper:#fffdf9;--rose:#9e5964;--line:#e8ddd7;--head:#f5e9e5}
     *{box-sizing:border-box} body{margin:0;background:#eee9e3;color:var(--ink);font-family:"Leelawadee UI","Noto Sans Thai",Arial,sans-serif}
@@ -69,7 +70,13 @@
 .pattern-notes{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:12px;background:#fffdf9eF}
 .pattern-notes label{display:block;margin-bottom:4px;font-size:18px;font-weight:650;color:var(--ink)}
 .pattern-notes .notes-help{margin:0 0 10px;color:var(--muted);font-size:13px}
+.notes-auth{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 12px}
+.notes-auth input{min-width:240px;flex:1}
+.notes-auth button{white-space:nowrap}
+.notes-user{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:0 0 12px;padding:10px 12px;border-radius:8px;background:#fff8f4;color:var(--muted);font-size:13px}
+.notes-user button{padding:7px 11px;background:#fff;color:var(--rose);border:1px solid var(--rose)}
 .pattern-notes textarea{display:block;width:100%;min-height:150px;resize:vertical;padding:13px 14px;border:1px solid #d8cac4;border-radius:9px;background:#fff;color:var(--ink);font:inherit;line-height:1.65;outline:none}
+.pattern-notes textarea:disabled{background:#f5f1ef;color:#928984;cursor:not-allowed}
 .pattern-notes textarea:focus{border-color:var(--rose);box-shadow:0 0 0 3px #9e596418}
 .notes-status{display:block;min-height:20px;margin-top:7px;color:var(--muted);font-size:12px;text-align:right}
 @media(max-width:680px){.harley-page{padding:16px}.harley-head{grid-template-columns:1fr 78px}.harley-thumb{width:78px;height:110px}.harley-watermark{right:-80px}}
@@ -123,8 +130,13 @@
     <p class="harley-note"><strong>วิธีคำนวณ:</strong> ขนาดสรีระมาตรฐานของ VikiSews + ค่าความหลวมที่แสดงในแพตเทิร์น Harley ของแต่ละไซซ์ ขนาดจริงอาจคลาดเคลื่อนเล็กน้อยจากการเย็บ การรีด และชนิดผ้า · <a href="https://vikisews.com/vykrojki/platja-i-sarafany/harli-plate/" target="_blank">เปิดหน้าแพตเทิร์น Harley</a></p>
     <div class="pattern-notes">
       <label for="harleyNotes">โน้ตเกี่ยวกับแพตเทิร์น</label>
-      <p class="notes-help">จดการปรับแพตเทิร์น ไซซ์ที่เลือก ชนิดผ้า หรือรายละเอียดการเย็บ — ระบบบันทึกให้อัตโนมัติในเบราว์เซอร์นี้</p>
-      <textarea id="harleyNotes" placeholder="ตัวอย่าง: เลือกไซซ์ 46 แต่เพิ่มสะโพก 1 ซม. / ใช้ผ้าทวีด 1.8 เมตร…"></textarea>
+      <p class="notes-help">เข้าสู่ระบบด้วยอีเมลเพื่อบันทึกโน้ตส่วนตัวลงฐานข้อมูล และเปิดดูได้จากทุกอุปกรณ์</p>
+      <form id="notesLogin" class="notes-auth">
+        <input id="notesEmail" type="email" autocomplete="email" placeholder="อีเมลสำหรับรับลิงก์เข้าสู่ระบบ" required>
+        <button type="submit">ส่งลิงก์เข้าสู่ระบบ</button>
+      </form>
+      <div id="notesUser" class="notes-user" hidden><span id="notesUserEmail"></span><button id="notesLogout" type="button">ออกจากระบบ</button></div>
+      <textarea id="harleyNotes" disabled placeholder="ตัวอย่าง: เลือกไซซ์ 46 แต่เพิ่มสะโพก 1 ซม. / ใช้ผ้าทวีด 1.8 เมตร…"></textarea>
       <span id="harleyNotesStatus" class="notes-status" aria-live="polite"></span>
     </div>
   </section>
@@ -197,12 +209,54 @@ function cell(s){return s?`${s} ซม.<br><span style="color:#756d69">(${inches
 function setPage(n){activePage=n;[0,1,2,3,4].forEach(i=>document.querySelector('#page'+i)?.classList.toggle('active',n===i));var sr=document.querySelector('#sizeRef');var hp=document.querySelector('#harleyPage');sr.style.display=n===0?'':'none';hp.style.display=n===4?'block':'none';if(n===0||n===4){document.querySelector('.tools').style.display='none';document.querySelector('.wrap').style.display='none';document.querySelector('#count').textContent=n===0?'หน้า 0 • โครงสร้างไซส์':'หน้า 4 • Harley Dress';}else{document.querySelector('.tools').style.display='';document.querySelector('.wrap').style.display='';render(document.querySelector('#q').value);}window.scrollTo({top:0,behavior:'smooth'});}
 function render(filter=''){const f=filter.trim().toLowerCase(); const list=[products1,products2,products3][activePage-1]; const data=list.filter(p=>p[0].toLowerCase().includes(f)); document.querySelector('#rows').innerHTML=data.map(p=>{const href=activePage===1?base+p[1]+'/':'https://vikisews.com/vykrojki/'+p[1]+'/';const imageSrc=p[2].startsWith('data:')?p[2]:imgBase+p[2];return `<tr><td class="photo"><img loading="lazy" src="${imageSrc}" alt="${p[0]}"></td><td class="name"><a href="${href}" target="_blank">${p[0]}</a><small>${p[1]}</small></td><td class="num">${cell(p[3])}</td><td class="num">${cell(p[4])}</td><td class="num">${cell(p[5])}</td><td class="num">${cell(p[6])}</td></tr>`}).join(''); document.querySelector('#count').textContent=`หน้า ${activePage} • ${data.length} รายการ`;}
 document.querySelector('#q').addEventListener('input',e=>render(e.target.value)); setPage(3);
+const SUPABASE_URL='https://zybhnmasuprjasbjbmym.supabase.co';
+const SUPABASE_KEY='sb_publishable_2zNMPR-0Hdt8KJEF6SMf_A_CpZdKtfd';
+const notesDb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 const harleyNotes=document.querySelector('#harleyNotes');
 const harleyNotesStatus=document.querySelector('#harleyNotesStatus');
-const harleyNotesKey='vikisews-notes:harley-dress';
-try{harleyNotes.value=localStorage.getItem(harleyNotesKey)||'';}catch(error){harleyNotesStatus.textContent='เบราว์เซอร์นี้ไม่อนุญาตให้บันทึกโน้ต';}
+const notesLogin=document.querySelector('#notesLogin');
+const notesEmail=document.querySelector('#notesEmail');
+const notesUser=document.querySelector('#notesUser');
+const notesUserEmail=document.querySelector('#notesUserEmail');
+const notesLogout=document.querySelector('#notesLogout');
+const patternSlug='harley-dress';
+let notesSession=null;
 let harleyNotesTimer;
-harleyNotes.addEventListener('input',()=>{harleyNotesStatus.textContent='กำลังบันทึก…';clearTimeout(harleyNotesTimer);harleyNotesTimer=setTimeout(()=>{try{localStorage.setItem(harleyNotesKey,harleyNotes.value);harleyNotesStatus.textContent='บันทึกแล้ว';}catch(error){harleyNotesStatus.textContent='บันทึกไม่ได้ในเบราว์เซอร์นี้';}},350);});
+
+async function loadCloudNote(){
+  harleyNotesStatus.textContent='กำลังโหลดโน้ต…';
+  const {data,error}=await notesDb.from('pattern_notes').select('note').eq('pattern_slug',patternSlug).maybeSingle();
+  if(error){harleyNotesStatus.textContent='โหลดโน้ตไม่สำเร็จ';return;}
+  harleyNotes.value=data?.note||'';
+  harleyNotesStatus.textContent=data?'โหลดจากฐานข้อมูลแล้ว':'พร้อมบันทึกโน้ตใหม่';
+}
+async function showNotesSession(session){
+  notesSession=session;
+  const signedIn=Boolean(session?.user);
+  notesLogin.hidden=signedIn;
+  notesUser.hidden=!signedIn;
+  harleyNotes.disabled=!signedIn;
+  notesUserEmail.textContent=signedIn?`เข้าสู่ระบบ: ${session.user.email}`:'';
+  if(signedIn)await loadCloudNote();else{harleyNotes.value='';harleyNotesStatus.textContent='กรุณาเข้าสู่ระบบเพื่อดูและบันทึกโน้ต';}
+}
+notesLogin.addEventListener('submit',async event=>{
+  event.preventDefault();
+  harleyNotesStatus.textContent='กำลังส่งลิงก์เข้าสู่ระบบ…';
+  const {error}=await notesDb.auth.signInWithOtp({email:notesEmail.value.trim(),options:{emailRedirectTo:'https://moeionblog-create.github.io/vikisews-ease-table/'}});
+  harleyNotesStatus.textContent=error?'ส่งลิงก์ไม่สำเร็จ กรุณาลองใหม่':'ส่งแล้ว กรุณาเปิดลิงก์ในอีเมล';
+});
+notesLogout.addEventListener('click',async()=>{await notesDb.auth.signOut();});
+harleyNotes.addEventListener('input',()=>{
+  if(!notesSession?.user)return;
+  harleyNotesStatus.textContent='กำลังบันทึก…';
+  clearTimeout(harleyNotesTimer);
+  harleyNotesTimer=setTimeout(async()=>{
+    const {error}=await notesDb.from('pattern_notes').upsert({user_id:notesSession.user.id,pattern_slug:patternSlug,note:harleyNotes.value,updated_at:new Date().toISOString()},{onConflict:'user_id,pattern_slug'});
+    harleyNotesStatus.textContent=error?'บันทึกไม่สำเร็จ':'บันทึกลงฐานข้อมูลแล้ว';
+  },500);
+});
+notesDb.auth.onAuthStateChange((_event,session)=>{showNotesSession(session);});
+notesDb.auth.getSession().then(({data})=>showNotesSession(data.session));
 </script>
 </body></html>
 
