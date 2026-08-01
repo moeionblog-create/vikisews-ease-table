@@ -53,6 +53,20 @@
 .size-ref-page ul{margin:0 0 14px;padding-left:20px}
 .size-ref-page .note{color:var(--muted);font-size:13px;margin:6px 0}
 #page0{order:-1}
+.harley-page{display:none;position:relative;overflow:hidden;margin:0 0 10px;padding:24px;border:1px solid var(--line);border-radius:14px;background:#fff}
+.harley-page>*:not(.harley-watermark){position:relative;z-index:1}
+.harley-watermark{position:absolute;z-index:0;right:-25px;top:30px;width:420px;height:650px;object-fit:cover;object-position:62% center;opacity:.055;filter:grayscale(1)}
+.harley-head{display:grid;grid-template-columns:1fr 105px;gap:20px;align-items:center;margin-bottom:18px}
+.harley-head h2{margin:0 0 6px;font-size:clamp(26px,3vw,38px)}
+.harley-head p{margin:0;color:var(--muted)}
+.harley-thumb{width:105px;height:145px;object-fit:cover;object-position:62% center;border-radius:10px;border:1px solid var(--line);box-shadow:0 8px 20px #493a3025}
+.harley-page .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:#ffffffdf}
+.harley-page table{min-width:720px;background:#ffffffdf}
+.harley-page th,.harley-page td{text-align:center;white-space:nowrap}
+.harley-page td:first-child{font-weight:700;color:var(--rose)}
+.harley-page .measurement{font-weight:650}.harley-page .inch{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.harley-page .harley-note{margin:16px 0 0;padding:13px 15px;border-left:4px solid var(--rose);border-radius:0 8px 8px 0;background:#fff8f4;color:var(--muted);font-size:13px;line-height:1.65}
+@media(max-width:680px){.harley-page{padding:16px}.harley-head{grid-template-columns:1fr 78px}.harley-thumb{width:78px;height:110px}.harley-watermark{right:-80px}}
 </style>
 </head>
 <body><main>
@@ -78,7 +92,30 @@
 <p class="note">หมายเหตุ: ตารางนี้เป็นขนาดสรีระมาตรฐาน (body measurement) ไม่ใช่ขนาดเสื้อสำเร็จ ต้องนำไปรวมกับค่าเผื่อหลวม (ease) ของแต่ละแพตเทิร์นในตารางด้านล่างจึงจะได้ขนาดเสื้อสำเร็จจริง</p>
 <p class="note">แหล่งข้อมูล: <a href="https://vikisews.com/how-to-choose-size/" target="_blank">VikiSews — How to choose a size</a> · จัดทำวันที่ 22 กรกฎาคม 2026</p>
 </div>
-  <div class="pages"><button id="page0" onclick="setPage(0)" class="active">หน้า 0 — โครงสร้างไซส์</button><button id="page1" class="" onclick="setPage(1)">หน้า 1 — เดรส (25)</button><button id="page2" onclick="setPage(2)" class="">หน้า 2 — เสื้อ / แจ็กเก็ต (19)</button><button id="page3" onclick="setPage(3)" class="">หน้า 3 — แจ็กเก็ต / เสื้อกั๊ก (23)</button></div>
+  <div class="pages"><button id="page0" onclick="setPage(0)" class="active">หน้า 0 — โครงสร้างไซส์</button><button id="page1" class="" onclick="setPage(1)">หน้า 1 — เดรส (25)</button><button id="page2" onclick="setPage(2)" class="">หน้า 2 — เสื้อ / แจ็กเก็ต (19)</button><button id="page3" onclick="setPage(3)" class="">หน้า 3 — แจ็กเก็ต / เสื้อกั๊ก (23)</button><button id="page4" onclick="setPage(4)" class="">หน้า 4 — Harley Dress</button></div>
+  <section id="harleyPage" class="harley-page">
+    <img class="harley-watermark" src="https://storage.yandexcloud.net/vikisews-public-media/media/cache/e4/b8/e4b8ec0715adcbd8b8936de3101e8a23.jpg" alt="" aria-hidden="true">
+    <div class="harley-head">
+      <div><h2>Harley Dress — ขนาดชุดสำเร็จ</h2><p>รอบอก รอบเอว และรอบสะโพก หลังรวมค่าความหลวมเฉพาะรายไซซ์แล้ว</p></div>
+      <img class="harley-thumb" src="https://storage.yandexcloud.net/vikisews-public-media/media/cache/e4/b8/e4b8ec0715adcbd8b8936de3101e8a23.jpg" alt="Harley Dress">
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>ไซซ์ EU</th><th>รอบอกสำเร็จ</th><th>รอบเอวสำเร็จ</th><th>รอบสะโพกสำเร็จ</th></tr></thead>
+      <tbody>
+        <tr><td>34</td><td><span class="measurement">87.0 ซม.</span><span class="inch">34.3 นิ้ว</span></td><td><span class="measurement">65.2 ซม.</span><span class="inch">25.7 นิ้ว</span></td><td><span class="measurement">93.1 ซม.</span><span class="inch">36.7 นิ้ว</span></td></tr>
+        <tr><td>36</td><td><span class="measurement">91.0 ซม.</span><span class="inch">35.8 นิ้ว</span></td><td><span class="measurement">69.2 ซม.</span><span class="inch">27.2 นิ้ว</span></td><td><span class="measurement">97.2 ซม.</span><span class="inch">38.3 นิ้ว</span></td></tr>
+        <tr><td>38</td><td><span class="measurement">95.0 ซม.</span><span class="inch">37.4 นิ้ว</span></td><td><span class="measurement">73.2 ซม.</span><span class="inch">28.8 นิ้ว</span></td><td><span class="measurement">101.3 ซม.</span><span class="inch">39.9 นิ้ว</span></td></tr>
+        <tr><td>40</td><td><span class="measurement">99.1 ซม.</span><span class="inch">39.0 นิ้ว</span></td><td><span class="measurement">77.2 ซม.</span><span class="inch">30.4 นิ้ว</span></td><td><span class="measurement">105.3 ซม.</span><span class="inch">41.5 นิ้ว</span></td></tr>
+        <tr><td>42</td><td><span class="measurement">103.1 ซม.</span><span class="inch">40.6 นิ้ว</span></td><td><span class="measurement">81.2 ซม.</span><span class="inch">32.0 นิ้ว</span></td><td><span class="measurement">109.4 ซม.</span><span class="inch">43.1 นิ้ว</span></td></tr>
+        <tr><td>44</td><td><span class="measurement">107.1 ซม.</span><span class="inch">42.2 นิ้ว</span></td><td><span class="measurement">85.2 ซม.</span><span class="inch">33.5 นิ้ว</span></td><td><span class="measurement">113.5 ซม.</span><span class="inch">44.7 นิ้ว</span></td></tr>
+        <tr><td>46</td><td><span class="measurement">111.3 ซม.</span><span class="inch">43.8 นิ้ว</span></td><td><span class="measurement">90.3 ซม.</span><span class="inch">35.6 นิ้ว</span></td><td><span class="measurement">118.7 ซม.</span><span class="inch">46.7 นิ้ว</span></td></tr>
+        <tr><td>48</td><td><span class="measurement">115.2 ซม.</span><span class="inch">45.4 นิ้ว</span></td><td><span class="measurement">94.1 ซม.</span><span class="inch">37.0 นิ้ว</span></td><td><span class="measurement">122.8 ซม.</span><span class="inch">48.3 นิ้ว</span></td></tr>
+        <tr><td>50</td><td><span class="measurement">119.3 ซม.</span><span class="inch">47.0 นิ้ว</span></td><td><span class="measurement">98.3 ซม.</span><span class="inch">38.7 นิ้ว</span></td><td><span class="measurement">126.9 ซม.</span><span class="inch">50.0 นิ้ว</span></td></tr>
+        <tr><td>52</td><td><span class="measurement">123.3 ซม.</span><span class="inch">48.5 นิ้ว</span></td><td><span class="measurement">102.4 ซม.</span><span class="inch">40.3 นิ้ว</span></td><td><span class="measurement">130.9 ซม.</span><span class="inch">51.5 นิ้ว</span></td></tr>
+      </tbody>
+    </table></div>
+    <p class="harley-note"><strong>วิธีคำนวณ:</strong> ขนาดสรีระมาตรฐานของ VikiSews + ค่าความหลวมที่แสดงในแพตเทิร์น Harley ของแต่ละไซซ์ ขนาดจริงอาจคลาดเคลื่อนเล็กน้อยจากการเย็บ การรีด และชนิดผ้า · <a href="https://vikisews.com/vykrojki/platja-i-sarafany/harli-plate/" target="_blank">เปิดหน้าแพตเทิร์น Harley</a></p>
+  </section>
   <div class="tools" style="display: none;"><input id="q" placeholder="ค้นหาชื่อสินค้า…"><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button><span class="count" id="count">หน้า 0 • โครงสร้างไซส์</span></div>
   <div class="wrap" style="display: none;"><table>
     <thead><tr><th>รูป</th><th>สินค้า</th><th>รอบอก</th><th>รอบเอว</th><th>รอบสะโพก</th><th>รอบต้นแขน</th></tr></thead>
@@ -145,7 +182,7 @@ const imgBase='https://storage.yandexcloud.net/vikisews-public-media/media/cache
 let activePage=3;
 function inches(s){if(!s)return '—'; return s.split(/(\[[^\]]+\])/).map(part=>part.startsWith('[')?part:part.replace(/-?\d+(?:\.\d+)?/g,m=>(Number(m)/2.54).toFixed(2))).join('');}
 function cell(s){return s?`${s} ซม.<br><span style="color:#756d69">(${inches(s)} นิ้ว)</span>`:'—'}
-function setPage(n){activePage=n;[0,1,2,3].forEach(i=>document.querySelector('#page'+i)?.classList.toggle('active',n===i));var sr=document.querySelector('#sizeRef');if(n===0){sr.style.display='';document.querySelector('.tools').style.display='none';document.querySelector('.wrap').style.display='none';document.querySelector('#count').textContent='หน้า 0 • โครงสร้างไซส์';}else{sr.style.display='none';document.querySelector('.tools').style.display='';document.querySelector('.wrap').style.display='';render(document.querySelector('#q').value);}window.scrollTo({top:0,behavior:'smooth'});}
+function setPage(n){activePage=n;[0,1,2,3,4].forEach(i=>document.querySelector('#page'+i)?.classList.toggle('active',n===i));var sr=document.querySelector('#sizeRef');var hp=document.querySelector('#harleyPage');sr.style.display=n===0?'':'none';hp.style.display=n===4?'block':'none';if(n===0||n===4){document.querySelector('.tools').style.display='none';document.querySelector('.wrap').style.display='none';document.querySelector('#count').textContent=n===0?'หน้า 0 • โครงสร้างไซส์':'หน้า 4 • Harley Dress';}else{document.querySelector('.tools').style.display='';document.querySelector('.wrap').style.display='';render(document.querySelector('#q').value);}window.scrollTo({top:0,behavior:'smooth'});}
 function render(filter=''){const f=filter.trim().toLowerCase(); const list=[products1,products2,products3][activePage-1]; const data=list.filter(p=>p[0].toLowerCase().includes(f)); document.querySelector('#rows').innerHTML=data.map(p=>{const href=activePage===1?base+p[1]+'/':'https://vikisews.com/vykrojki/'+p[1]+'/';const imageSrc=p[2].startsWith('data:')?p[2]:imgBase+p[2];return `<tr><td class="photo"><img loading="lazy" src="${imageSrc}" alt="${p[0]}"></td><td class="name"><a href="${href}" target="_blank">${p[0]}</a><small>${p[1]}</small></td><td class="num">${cell(p[3])}</td><td class="num">${cell(p[4])}</td><td class="num">${cell(p[5])}</td><td class="num">${cell(p[6])}</td></tr>`}).join(''); document.querySelector('#count').textContent=`หน้า ${activePage} • ${data.length} รายการ`;}
 document.querySelector('#q').addEventListener('input',e=>render(e.target.value)); setPage(3);
 </script>
