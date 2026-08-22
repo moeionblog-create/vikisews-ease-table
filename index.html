@@ -209,7 +209,7 @@ const products3 = [["Noel jacket / Жакет Ноэль","zhakety-kardigany-zhi
 const base='https://vikisews.com/vykrojki/platja-i-sarafany/';
 const imgBase='https://storage.yandexcloud.net/vikisews-public-media/media/cache/';
 let activePage=3;
-const merciSizes=[['34','80','60','86','16.8','36.9','8.6','46.0','59.2','96.8','96.9','102.8'],['36','84','64','90','16.8','35.9','8.4','46.3','59.3','100.8','99.9','106.8'],['38','88','68','94','16.9','35.9','8.2','46.6','59.4','104.9','103.9','110.9'],['40','92','72','98','16.9','36.9','8.0','46.9','59.5','108.9','108.9','114.9'],['42','96','76','102','17.0','36.9','7.8','47.2','59.7','113.0','112.9','119.0']];
+const merciSizes=[['34','80','60','86','16.8','36.9','8.6','46.0','59.2','96.8','96.9','102.8'],['36','84','64','90','16.8','36.9','8.4','46.3','59.3','100.8','100.9','106.8'],['38','88','68','94','16.9','36.9','8.2','46.6','59.4','104.9','104.9','110.9'],['40','92','72','98','16.9','36.9','8.0','46.9','59.5','108.9','108.9','114.9'],['42','96','76','102','17.0','36.9','7.8','47.2','59.7','113.0','112.9','119.0']];
 let merciUnit='cm';
 function merciInches(value){return (Number(value)/2.54).toFixed(2).replace(/\.?0+$/,'')}
 function setMerciUnit(unit){merciUnit=unit;document.querySelectorAll('.merci-unit').forEach(cell=>{cell.textContent=unit==='cm'?cell.dataset.cm:merciInches(cell.dataset.cm)});document.querySelectorAll('.unit-switch button').forEach(button=>{const active=button.dataset.unit===unit;button.classList.toggle('active',active);button.setAttribute('aria-pressed',active)})}
