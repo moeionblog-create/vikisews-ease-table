@@ -12,7 +12,7 @@
     h1{margin:0 0 6px;font-size:clamp(26px,3vw,42px);font-weight:650} .sub{margin:0 0 22px;color:var(--muted)}
     .tools,.pages{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:16px 0}
     input{min-width:280px;padding:10px 13px;border:1px solid var(--line);border-radius:8px;background:white;font:inherit}
-    button{padding:10px 14px;border:0;border-radius:8px;background:var(--rose);color:white;font:inherit;cursor:pointer}.pages button{background:white;color:var(--rose);border:1px solid var(--rose)}.pages button.active{background:var(--rose);color:white}
+    button{padding:10px 14px;border:0;border-radius:8px;background:var(--rose);color:white;font:inherit;cursor:pointer}.pages button,.pages .page-link{padding:10px 14px;border-radius:8px;background:white;color:var(--rose);border:1px solid var(--rose);font:inherit;text-decoration:none}.pages button.active{background:var(--rose);color:white}
     .wrap{overflow:auto;border:1px solid var(--line);border-radius:10px}
     table{width:100%;border-collapse:separate;border-spacing:0;min-width:1050px} th,td{padding:11px 12px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);vertical-align:middle}
     th{position:sticky;top:0;z-index:2;background:var(--head);text-align:left;font-size:14px} td.num{font-variant-numeric:tabular-nums;white-space:nowrap} tr:last-child td{border-bottom:0} th:last-child,td:last-child{border-right:0}
@@ -110,7 +110,7 @@
 <p class="note">หมายเหตุ: ตารางนี้เป็นขนาดสรีระมาตรฐาน (body measurement) ไม่ใช่ขนาดเสื้อสำเร็จ ต้องนำไปรวมกับค่าเผื่อหลวม (ease) ของแต่ละแพตเทิร์นในตารางด้านล่างจึงจะได้ขนาดเสื้อสำเร็จจริง</p>
 <p class="note">แหล่งข้อมูล: <a href="https://vikisews.com/how-to-choose-size/" target="_blank">VikiSews — How to choose a size</a> · จัดทำวันที่ 22 กรกฎาคม 2026</p>
 </div>
-  <div class="pages"><button id="page0" onclick="setPage(0)" class="active">หน้า 0 — โครงสร้างไซส์</button><button id="page1" class="" onclick="setPage(1)">หน้า 1 — เดรส (25)</button><button id="page2" onclick="setPage(2)" class="">หน้า 2 — เสื้อ / แจ็กเก็ต (19)</button><button id="page3" onclick="setPage(3)" class="">หน้า 3 — แจ็กเก็ต / เสื้อกั๊ก (23)</button><button id="page4" onclick="setPage(4)" class="">หน้า 4 — Harley Dress</button></div>
+  <div class="pages"><button id="page0" onclick="setPage(0)" class="active">หน้า 0 — โครงสร้างไซส์</button><button id="page1" class="" onclick="setPage(1)">หน้า 1 — เดรส (25)</button><button id="page2" onclick="setPage(2)" class="">หน้า 2 — เสื้อ / แจ็กเก็ต (19)</button><button id="page3" onclick="setPage(3)" class="">หน้า 3 — แจ็กเก็ต / เสื้อกั๊ก (23)</button><button id="page4" onclick="setPage(4)" class="">หน้า 4 — Harley Dress</button><a class="page-link" href="ariana.html">หน้า 5 — Ariana</a></div>
   <section id="harleyPage" class="harley-page">
     <img class="harley-watermark" src="https://storage.yandexcloud.net/vikisews-public-media/media/cache/e4/b8/e4b8ec0715adcbd8b8936de3101e8a23.jpg" alt="" aria-hidden="true">
     <div class="harley-head">
@@ -212,7 +212,7 @@ const imgBase='https://storage.yandexcloud.net/vikisews-public-media/media/cache
 let activePage=3;
 const sizeDetails={
   merci:{slug:'mersi-zhaket',title:'Merci jacket',rows:[['34','80','60','86','16.8','36.9','8.6','46.0','59.2','96.8','96.9','102.8'],['36','84','64','90','16.8','36.9','8.4','46.3','59.3','100.8','100.9','106.8'],['38','88','68','94','16.9','36.9','8.2','46.6','59.4','104.9','104.9','110.9'],['40','92','72','98','16.9','36.9','8.0','46.9','59.5','108.9','108.9','114.9'],['42','96','76','102','17.0','36.9','7.8','47.2','59.7','113.0','112.9','119.0']]},
-  ariana:{slug:'arjana-zhaket',title:'Ariana jacket / Арьяна жакет',rows:[['34','80','60','86','4.7','8.3','8.2','47.1','19.4','84.7','68.3',''],['36','84','64','90','4.7','8.6','7.6','47.5','20.8','88.7','72.6',''],['38','88','68','94','4.7','8.9','7.2','47.8','22.1','92.7','76.9',''],['40','92','72','98','4.7','9.1','6.8','48.2','23.4','96.7','81.1',''],['42','96','76','102','4.7','9.4','6.4','48.5','24.6','100.7','85.4',''],['44','100','80','106','4.7','9.6','6.0','48.9','25.9','104.7','89.6','']]}
+  ariana:{slug:'arjana-zhaket',title:'Ariana jacket / Арьяна жакет',rows:[['34','80','60','86','4.7','8.4','8.0','47.1','19.4','84.7','68.4',''],['36','84','64','90','4.7','8.6','7.6','47.5','20.8','88.7','72.6',''],['38','88','68','94','4.7','8.9','7.2','47.8','22.1','92.7','76.9',''],['40','92','72','98','4.7','9.1','6.8','48.2','23.4','96.7','81.1',''],['42','96','76','102','4.7','9.4','6.4','48.5','24.6','100.7','85.4',''],['44','100','80','106','4.7','9.6','6.0','48.8','25.9','104.7','89.6','']]}
 };
 const detailUnits={merci:'cm',ariana:'cm'};
 function detailInches(value){return value===''||value==='—'?'—':(Number(value)/2.54).toFixed(2).replace(/\.?0+$/,'')}
