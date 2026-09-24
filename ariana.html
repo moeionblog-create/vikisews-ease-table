@@ -25,15 +25,25 @@
   <p class="sub">เปรียบเทียบขนาดคน ค่าเผื่อหลวม และขนาดชุดสำเร็จบริเวณรอบอก/รอบเอว สำหรับไซส์ EU 34–52</p>
   <div class="legend"><span class="person">สีม่วง = ขนาดคน</span><span class="ease">สีเหลือง = ค่าเผื่อหลวม</span><span class="finished">สีเขียว = ขนาดชุดสำเร็จ</span></div>
   <div class="switch" role="group" aria-label="เลือกหน่วยวัด"><strong>หน่วย:</strong><button type="button" class="active" data-unit="cm">ซม. (cm)</button><button type="button" data-unit="inch">นิ้ว (inch)</button></div>
+  <h2>ตารางออริจินอล — VikiSews</h2>
   <div class="table-wrap"><table>
     <thead><tr><th rowspan="2">ไซส์ EU</th><th colspan="3" class="person">ขนาดคน</th><th colspan="2" class="ease">ค่าเผื่อหลวม</th><th colspan="3" class="finished">ขนาดชุดสำเร็จ</th></tr><tr><th class="person">อก</th><th class="person">เอว</th><th class="person">อก − เอว</th><th class="ease">อก</th><th class="ease">เอว</th><th class="finished">อก</th><th class="finished">เอว</th><th class="finished">อก − เอว</th></tr></thead>
     <tbody id="rows"></tbody>
   </table></div>
   <div class="formula"><strong>ขนาดชุดสำเร็จ = ขนาดคน + ค่าเผื่อหลวม</strong><br>ตัวอย่างไซส์ 34: อก 80 + 4.7 = 84.7 ซม. · เอว 60 + 8.4 = 68.4 ซม.</div>
-  <p class="note">ฉบับปรับค่าเผื่อหลวมเอว: ไล่เชิงเส้นจาก 8.4 ซม. (ไซส์ 34) ถึง 14 ซม. (ไซส์ 52) และปัดเป็นหนึ่งตำแหน่งก่อนคำนวณขนาดสำเร็จ ส่วนขนาดคนและค่าเผื่ออกใช้ข้อมูลเดิม · ค่าเอวนี้เป็นค่าปรับใหม่ ไม่ใช่ค่าเดิมของ VikiSews · <a href="https://vikisews.com/vykrojki/blazers-and-vests/ariana-blazer/" target="_blank" rel="noopener">ดูแพตเทิร์น Ariana ที่ VikiSews</a></p>
+  <p class="note">ค่าเผื่อหลวมออริจินอลจากข้อมูล Ariana ที่ส่งมา ขนาดชุดสำเร็จคำนวณจากขนาดคนรวมค่าเผื่อหลวม</p>
+  <section style="margin-top:36px;padding-top:20px;border-top:2px solid var(--line)">
+  <h2>ตารางที่ moei คิดขึ้นมาใหม่</h2>
+  <p class="sub" style="margin-bottom:16px">ปรับเฉพาะค่าเผื่อหลวมเอว ไล่เชิงเส้นจาก 8.4 ถึง 14 ซม. ปัดหนึ่งตำแหน่งก่อนคำนวณขนาดสำเร็จ · ปุ่ม cm/inch ด้านบนใช้กับทั้งสองตาราง</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th rowspan="2">ไซส์ EU</th><th colspan="3" class="person">ขนาดคน</th><th colspan="2" class="ease">ค่าเผื่อหลวม</th><th colspan="3" class="finished">ขนาดชุดสำเร็จ</th></tr><tr><th class="person">อก</th><th class="person">เอว</th><th class="person">อก − เอว</th><th class="ease">อก</th><th class="ease">เอว</th><th class="finished">อก</th><th class="finished">เอว</th><th class="finished">อก − เอว</th></tr></thead>
+    <tbody id="moeiRows"></tbody>
+  </table></div>
+  <p class="note">ตารางปรับใหม่โดย moei ไม่ใช่ค่าเผื่อหลวมออริจินอลของ VikiSews</p>
+  </section>
 </main>
 <script>
-  const data=[
+  const moeiData=[
     [34,80,60,4.7,8.4,84.7,68.4],
     [36,84,64,4.7,9.0,88.7,73.0],
     [38,88,68,4.7,9.6,92.7,77.6],
@@ -45,9 +55,11 @@
     [50,112,92,4.4,13.4,116.4,105.4],
     [52,116,96,4.4,14.0,120.4,110.0]
   ];
+  const data=[[34,80,60,4.7,8.4,84.7,68.4],[36,84,64,4.7,8.6,88.7,72.6],[38,88,68,4.7,8.9,92.7,76.9],[40,92,72,4.7,9.1,96.7,81.1],[42,96,76,4.7,9.4,100.7,85.4],[44,100,80,4.7,9.6,104.7,89.6],[46,104,84,4.7,9.8,108.7,93.8],[48,108,88,4.5,10,112.5,98],[50,112,92,4.4,10.3,116.4,102.3],[52,116,96,4.4,10.5,120.4,106.5]];
   let unit='cm';
   const format=value=>unit==='cm'?`${value.toFixed(1).replace('.0','')} ซม.`:`${(value/2.54).toFixed(2)} นิ้ว`;
-  function render(){document.querySelector('#rows').innerHTML=data.map(row=>`<tr><td>${row[0]}</td>${[row[1],row[2],row[1]-row[2]].map(v=>`<td class="person">${format(v)}</td>`).join('')}${row.slice(3,5).map(v=>`<td class="ease">${format(v)}</td>`).join('')}${[row[5],row[6],row[5]-row[6]].map(v=>`<td class="finished">${format(v)}</td>`).join('')}</tr>`).join('')}
+  function renderRows(target,values){document.querySelector(target).innerHTML=values.map(row=>`<tr><td>${row[0]}</td>${[row[1],row[2],row[1]-row[2]].map(v=>`<td class="person">${format(v)}</td>`).join('')}${row.slice(3,5).map(v=>`<td class="ease">${format(v)}</td>`).join('')}${[row[5],row[6],row[5]-row[6]].map(v=>`<td class="finished">${format(v)}</td>`).join('')}</tr>`).join('')}
+  function render(){renderRows('#rows',data);renderRows('#moeiRows',moeiData)}
   document.querySelectorAll('.switch button').forEach(button=>button.addEventListener('click',()=>{unit=button.dataset.unit;document.querySelectorAll('.switch button').forEach(item=>item.classList.toggle('active',item===button));render()}));
   render();
 </script></body></html>
