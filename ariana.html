@@ -41,6 +41,15 @@
   </table></div>
   <p class="note">ตารางปรับใหม่โดย moei ไม่ใช่ค่าเผื่อหลวมออริจินอลของ VikiSews</p>
   </section>
+  <section style="margin-top:36px;padding-top:20px;border-top:2px solid var(--line)">
+    <h2>เปรียบเทียบรอบเอว — Original vs moei</h2>
+    <p class="sub" style="margin-bottom:16px">แสดงเซนติเมตรและนิ้วคู่กัน เพื่อดูขนาดที่เพิ่มจากออริจินอล</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th rowspan="2">ไซส์ EU</th><th colspan="2" class="ease">ค่าเผื่อหลวมเอว</th><th colspan="2" class="finished">รอบเอวชุดสำเร็จ</th><th rowspan="2" class="person">เพิ่มจาก Original<br>ซม.</th><th rowspan="2" class="person">เพิ่มจาก Original<br>นิ้ว</th></tr><tr><th class="ease">Original</th><th class="ease">moei</th><th class="finished">Original</th><th class="finished">moei</th></tr></thead>
+      <tbody id="comparisonRows"></tbody>
+    </table></div>
+    <p class="note">ส่วนต่าง = moei − Original เป็นรอบเอวรวมทั้งตัว ไม่ใช่ระยะขยับต่อข้างหรือต่อชิ้นแพตเทิร์น · ค่าเผื่อเอวและเอวชุดสำเร็จเพิ่มเท่ากัน เพราะใช้ขนาดคนเดิม · รอบอกชุดสำเร็จคงเดิมทุกไซส์ · นิ้วปัดทศนิยม 2 ตำแหน่ง</p>
+  </section>
 </main>
 <script>
   const moeiData=[
@@ -61,5 +70,11 @@
   function renderRows(target,values){document.querySelector(target).innerHTML=values.map(row=>`<tr><td>${row[0]}</td>${[row[1],row[2],row[1]-row[2]].map(v=>`<td class="person">${format(v)}</td>`).join('')}${row.slice(3,5).map(v=>`<td class="ease">${format(v)}</td>`).join('')}${[row[5],row[6],row[5]-row[6]].map(v=>`<td class="finished">${format(v)}</td>`).join('')}</tr>`).join('')}
   function render(){renderRows('#rows',data);renderRows('#moeiRows',moeiData)}
   document.querySelectorAll('.switch button').forEach(button=>button.addEventListener('click',()=>{unit=button.dataset.unit;document.querySelectorAll('.switch button').forEach(item=>item.classList.toggle('active',item===button));render()}));
+  const pair=value=>value.toFixed(1)+' ซม.<br><small style="color:var(--muted)">'+(value/2.54).toFixed(2)+' นิ้ว</small>';
+  document.querySelector('#comparisonRows').innerHTML=data.map(original=>{
+    const revised=moeiData.find(row=>row[0]===original[0]);
+    const delta=Number((revised[6]-original[6]).toFixed(1));
+    return '<tr><td>'+original[0]+'</td><td class="ease">'+pair(original[4])+'</td><td class="ease">'+pair(revised[4])+'</td><td class="finished">'+pair(original[6])+'</td><td class="finished">'+pair(revised[6])+'</td><td class="person">'+(delta>0?'+':'')+delta.toFixed(1)+'</td><td class="person">'+(delta>0?'+':'')+(delta/2.54).toFixed(2)+'</td></tr>';
+  }).join('');
   render();
 </script></body></html>
