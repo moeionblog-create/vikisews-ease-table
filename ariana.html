@@ -45,10 +45,10 @@
     <h2>เปรียบเทียบรอบเอว — Original vs moei</h2>
     <p class="sub" style="margin-bottom:16px">แสดงเซนติเมตรและนิ้วคู่กัน เพื่อดูขนาดที่เพิ่มจากออริจินอล</p>
     <div class="table-wrap"><table>
-      <thead><tr><th rowspan="2">ไซส์ EU</th><th colspan="2" class="ease">ค่าเผื่อหลวมเอว</th><th colspan="2" class="finished">รอบเอวชุดสำเร็จ</th><th rowspan="2" class="person">เพิ่มจาก Original<br>ซม.</th><th rowspan="2" class="person">เพิ่มจาก Original<br>นิ้ว</th></tr><tr><th class="ease">Original</th><th class="ease">moei</th><th class="finished">Original</th><th class="finished">moei</th></tr></thead>
+      <thead><tr><th rowspan="2">ไซส์ EU</th><th colspan="2" class="ease">ค่าเผื่อหลวมเอว</th><th colspan="2" class="finished">รอบเอวชุดสำเร็จ</th><th rowspan="2" class="person">เพิ่มจาก Original<br>ซม.</th><th rowspan="2" class="person">เพิ่มจาก Original<br>นิ้ว</th><th rowspan="2" class="person">เพิ่มจาก Original ÷ 4<br>ซม.</th><th rowspan="2" class="person">เพิ่มจาก Original ÷ 4<br>นิ้ว</th></tr><tr><th class="ease">Original</th><th class="ease">moei</th><th class="finished">Original</th><th class="finished">moei</th></tr></thead>
       <tbody id="comparisonRows"></tbody>
     </table></div>
-    <p class="note">ส่วนต่าง = moei − Original เป็นรอบเอวรวมทั้งตัว ไม่ใช่ระยะขยับต่อข้างหรือต่อชิ้นแพตเทิร์น · ค่าเผื่อเอวและเอวชุดสำเร็จเพิ่มเท่ากัน เพราะใช้ขนาดคนเดิม · รอบอกชุดสำเร็จคงเดิมทุกไซส์ · นิ้วปัดทศนิยม 2 ตำแหน่ง</p>
+    <p class="note">ส่วนต่าง = moei − Original เป็นรอบเอวรวมทั้งตัว ไม่ใช่ระยะขยับต่อข้างหรือต่อชิ้นแพตเทิร์น · ค่าเผื่อเอวและเอวชุดสำเร็จเพิ่มเท่ากัน เพราะใช้ขนาดคนเดิม · รอบอกชุดสำเร็จคงเดิมทุกไซส์ · นิ้วปัดทศนิยม 2 ตำแหน่ง · คอลัมน์ ÷ 4 คือส่วนเพิ่มเมื่อแบ่งรอบเอวเป็น 4 ส่วนเท่ากัน แสดง 3 ตำแหน่ง และแปลงนิ้วจากค่าก่อนปัดเศษ</p>
   </section>
 </main>
 <script>
@@ -74,7 +74,7 @@
   document.querySelector('#comparisonRows').innerHTML=data.map(original=>{
     const revised=moeiData.find(row=>row[0]===original[0]);
     const delta=Number((revised[6]-original[6]).toFixed(1));
-    return '<tr><td>'+original[0]+'</td><td class="ease">'+pair(original[4])+'</td><td class="ease">'+pair(revised[4])+'</td><td class="finished">'+pair(original[6])+'</td><td class="finished">'+pair(revised[6])+'</td><td class="person">'+(delta>0?'+':'')+delta.toFixed(1)+'</td><td class="person">'+(delta>0?'+':'')+(delta/2.54).toFixed(2)+'</td></tr>';
+    return '<tr><td>'+original[0]+'</td><td class="ease">'+pair(original[4])+'</td><td class="ease">'+pair(revised[4])+'</td><td class="finished">'+pair(original[6])+'</td><td class="finished">'+pair(revised[6])+'</td><td class="person">'+(delta>0?'+':'')+delta.toFixed(1)+'</td><td class="person">'+(delta>0?'+':'')+(delta/2.54).toFixed(2)+'</td><td class="person"><strong>'+(delta/4).toFixed(3)+'</strong></td><td class="person"><strong>'+(delta/4/2.54).toFixed(3)+'</strong></td></tr>';
   }).join('');
   render();
 </script></body></html>
