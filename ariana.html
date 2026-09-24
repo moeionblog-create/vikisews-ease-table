@@ -26,7 +26,7 @@
   <div class="legend"><span class="person">สีม่วง = ขนาดคน</span><span class="ease">สีเหลือง = ค่าเผื่อหลวม</span><span class="finished">สีเขียว = ขนาดชุดสำเร็จ</span></div>
   <div class="switch" role="group" aria-label="เลือกหน่วยวัด"><strong>หน่วย:</strong><button type="button" class="active" data-unit="cm">ซม. (cm)</button><button type="button" data-unit="inch">นิ้ว (inch)</button></div>
   <div class="table-wrap"><table>
-    <thead><tr><th rowspan="2">ไซส์ EU</th><th colspan="2" class="person">ขนาดคน</th><th colspan="2" class="ease">ค่าเผื่อหลวม</th><th colspan="2" class="finished">ขนาดชุดสำเร็จ</th></tr><tr><th class="person">อก</th><th class="person">เอว</th><th class="ease">อก</th><th class="ease">เอว</th><th class="finished">อก</th><th class="finished">เอว</th></tr></thead>
+    <thead><tr><th rowspan="2">ไซส์ EU</th><th colspan="3" class="person">ขนาดคน</th><th colspan="2" class="ease">ค่าเผื่อหลวม</th><th colspan="3" class="finished">ขนาดชุดสำเร็จ</th></tr><tr><th class="person">อก</th><th class="person">เอว</th><th class="person">อก − เอว</th><th class="ease">อก</th><th class="ease">เอว</th><th class="finished">อก</th><th class="finished">เอว</th><th class="finished">อก − เอว</th></tr></thead>
     <tbody id="rows"></tbody>
   </table></div>
   <div class="formula"><strong>ขนาดชุดสำเร็จ = ขนาดคน + ค่าเผื่อหลวม</strong><br>ตัวอย่างไซส์ 34: อก 80 + 4.7 = 84.7 ซม. · เอว 60 + 8.4 = 68.4 ซม.</div>
@@ -47,7 +47,7 @@
   ];
   let unit='cm';
   const format=value=>unit==='cm'?`${value.toFixed(1).replace('.0','')} ซม.`:`${(value/2.54).toFixed(2)} นิ้ว`;
-  function render(){document.querySelector('#rows').innerHTML=data.map(row=>`<tr><td>${row[0]}</td>${row.slice(1,3).map(v=>`<td class="person">${format(v)}</td>`).join('')}${row.slice(3,5).map(v=>`<td class="ease">${format(v)}</td>`).join('')}${row.slice(5).map(v=>`<td class="finished">${format(v)}</td>`).join('')}</tr>`).join('')}
+  function render(){document.querySelector('#rows').innerHTML=data.map(row=>`<tr><td>${row[0]}</td>${[row[1],row[2],row[1]-row[2]].map(v=>`<td class="person">${format(v)}</td>`).join('')}${row.slice(3,5).map(v=>`<td class="ease">${format(v)}</td>`).join('')}${[row[5],row[6],row[5]-row[6]].map(v=>`<td class="finished">${format(v)}</td>`).join('')}</tr>`).join('')}
   document.querySelectorAll('.switch button').forEach(button=>button.addEventListener('click',()=>{unit=button.dataset.unit;document.querySelectorAll('.switch button').forEach(item=>item.classList.toggle('active',item===button));render()}));
   render();
 </script></body></html>
