@@ -22,7 +22,7 @@
 <body><main>
   <a class="back" href="index.html">← กลับหน้าตารางรวม</a>
   <h1>Ariana jacket — ตารางไซส์</h1>
-  <p class="sub">เปรียบเทียบขนาดคน ค่าเผื่อหลวม และขนาดชุดสำเร็จบริเวณรอบอก/รอบเอว สำหรับไซส์ EU 34–44</p>
+  <p class="sub">เปรียบเทียบขนาดคน ค่าเผื่อหลวม และขนาดชุดสำเร็จบริเวณรอบอก/รอบเอว สำหรับไซส์ EU 34–52</p>
   <div class="legend"><span class="person">สีม่วง = ขนาดคน</span><span class="ease">สีเหลือง = ค่าเผื่อหลวม</span><span class="finished">สีเขียว = ขนาดชุดสำเร็จ</span></div>
   <div class="switch" role="group" aria-label="เลือกหน่วยวัด"><strong>หน่วย:</strong><button type="button" class="active" data-unit="cm">ซม. (cm)</button><button type="button" data-unit="inch">นิ้ว (inch)</button></div>
   <div class="table-wrap"><table>
@@ -39,7 +39,11 @@
     [38,88,68,4.7,8.9,92.7,76.9],
     [40,92,72,4.7,9.1,96.7,81.1],
     [42,96,76,4.7,9.4,100.7,85.4],
-    [44,100,80,4.7,9.6,104.7,89.6]
+    [44,100,80,4.7,9.6,104.7,89.6],
+    [46,104,84,4.7,9.8,108.7,93.8],
+    [48,108,88,4.5,10.0,112.5,98.0],
+    [50,112,92,4.4,10.3,116.4,102.3],
+    [52,116,96,4.4,10.5,120.4,106.5]
   ];
   let unit='cm';
   const format=value=>unit==='cm'?`${value.toFixed(1).replace('.0','')} ซม.`:`${(value/2.54).toFixed(2)} นิ้ว`;
