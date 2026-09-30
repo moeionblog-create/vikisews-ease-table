@@ -15,6 +15,7 @@
     .switch{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:0 0 18px}.switch strong{margin-right:3px}.switch button{padding:8px 13px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink);font:inherit;cursor:pointer}.switch button.active{border-color:var(--rose);background:var(--rose);color:#fff}
     .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff}table{width:100%;min-width:780px;border-collapse:collapse}th,td{padding:12px 11px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);text-align:center;white-space:nowrap;font-variant-numeric:tabular-nums}th:last-child,td:last-child{border-right:0}tbody tr:last-child td{border-bottom:0}thead th{background:var(--head);font-size:14px}thead .person{color:#7653a6}thead .ease{color:#956600}thead .finished{color:#36734b}tbody td:first-child{font-weight:700;color:var(--rose)}tbody tr:hover{filter:brightness(.985)}
     .formula{margin:18px 0 0;padding:14px 16px;border-left:4px solid var(--rose);border-radius:0 9px 9px 0;background:#fff8f4;line-height:1.7}.note{margin:12px 0 0;color:var(--muted);font-size:13px;line-height:1.65}.note a{color:var(--rose)}
+    .panisa-badge{display:inline-block;margin-top:6px;padding:3px 9px;border:1px solid var(--rose);border-radius:999px;background:#fff8f4;color:var(--rose);font-size:12px;font-weight:700;line-height:1.5}.panisa-body{display:block;margin-top:4px;color:var(--muted);font-size:11px;font-weight:400}.panisa-xs{border-style:dashed}.panisa-note{margin:0 0 16px;padding:12px 15px;background:#fff8f4;border:1px solid var(--line);border-radius:10px;line-height:1.8;font-size:14px}.panisa-note p{margin:0}.panisa-note p+p{margin-top:6px}
     @media(max-width:600px){main{margin:0;min-height:100vh;box-shadow:none}.back{margin-bottom:16px}}
     @media print{body{background:#fff}main{max-width:none;margin:0;padding:10px;box-shadow:none}.back,.switch{display:none}table{min-width:0}th,td{padding:8px;font-size:11px}}
   </style>
@@ -33,8 +34,9 @@
   <div class="formula"><strong>ขนาดชุดสำเร็จ = ขนาดคน + ค่าเผื่อหลวม</strong><br>ตัวอย่างไซส์ 34: อก 80 + 4.7 = 84.7 ซม. · เอว 60 + 8.4 = 68.4 ซม.</div>
   <p class="note">ค่าเผื่อหลวมออริจินอลจากข้อมูล Ariana ที่ส่งมา ขนาดชุดสำเร็จคำนวณจากขนาดคนรวมค่าเผื่อหลวม</p>
   <section style="margin-top:36px;padding-top:20px;border-top:2px solid var(--line)">
-  <h2>ตารางที่ moei คิดขึ้นมาใหม่</h2>
+  <h2 id="moei-sizing">ตารางที่ moei คิดขึ้นมาใหม่</h2>
   <p class="sub" style="margin-bottom:16px">ปรับเฉพาะค่าเผื่อหลวมเอว ไล่เชิงเส้นจาก 8.4 ถึง 14 ซม. ปัดหนึ่งตำแหน่งก่อนคำนวณขนาดสำเร็จ · ปุ่ม cm/inch ด้านบนใช้กับทั้งสองตาราง</p>
+  <div class="panisa-note"><p><strong>บันทึกไซซ์ที่เลือกใช้สำหรับ PANISA</strong> — อกคนใส่ XS 32, S 34, M 36, L 38, XL 40, 2XL 42, 3XL 44 นิ้ว</p><p>PANISA เพิ่มรอบอกคนใส่ทีละ 2 นิ้ว (5.08 ซม. หรือประมาณ 5 ซม.) ส่วน Viki เพิ่มทีละ 4 ซม. จึงเลือกไซซ์ฐานตามป้ายวงรีในตารางเพื่อนำไปปรับแพตเทิร์น ไม่ใช่การเทียบว่ารอบอกคนใส่เท่ากัน</p><p><strong>PANISA XS · อกคนใส่ 32 นิ้ว:</strong> ใช้ค่ากึ่งกลางระหว่าง Viki 34 และ 36; ป้าย “ฐาน XS” แสดงสองไซซ์ที่ใช้หาค่ากึ่งกลาง</p></div>
   <div class="table-wrap"><table>
     <thead><tr><th rowspan="2">ไซส์ EU</th><th colspan="3" class="person">ขนาดคน</th><th colspan="2" class="ease">ค่าเผื่อหลวม</th><th colspan="3" class="finished">ขนาดชุดสำเร็จ</th></tr><tr><th class="person">อก</th><th class="person">เอว</th><th class="person">อก − เอว</th><th class="ease">อก</th><th class="ease">เอว</th><th class="finished">อก</th><th class="finished">เอว</th><th class="finished">อก − เอว</th></tr></thead>
     <tbody id="moeiRows"></tbody>
@@ -65,9 +67,15 @@
     [52,116,96,4.4,14.0,120.4,110.0]
   ];
   const data=[[34,80,60,4.7,8.4,84.7,68.4],[36,84,64,4.7,8.6,88.7,72.6],[38,88,68,4.7,8.9,92.7,76.9],[40,92,72,4.7,9.1,96.7,81.1],[42,96,76,4.7,9.4,100.7,85.4],[44,100,80,4.7,9.6,104.7,89.6],[46,104,84,4.7,9.8,108.7,93.8],[48,108,88,4.5,10,112.5,98],[50,112,92,4.4,10.3,116.4,102.3],[52,116,96,4.4,10.5,120.4,106.5]];
+  const panisaSizes={38:['S',34],40:['M',36],42:['L',38],46:['XL',40],48:['2XL',42],52:['3XL',44]};
+  function panisaLabel(size){
+    if(size===34||size===36)return '<br><span class="panisa-badge panisa-xs">ฐาน XS</span><small class="panisa-body">ใช้กึ่งกลาง 34–36<br>อกคนใส่ 32 นิ้ว</small>';
+    const match=panisaSizes[size];
+    return match?'<br><span class="panisa-badge">PANISA '+match[0]+'</span><small class="panisa-body">อกคนใส่ '+match[1]+' นิ้ว</small>':'';
+  }
   let unit='cm';
   const format=value=>unit==='cm'?`${value.toFixed(1).replace('.0','')} ซม.`:`${(value/2.54).toFixed(2)} นิ้ว`;
-  function renderRows(target,values){document.querySelector(target).innerHTML=values.map(row=>`<tr><td>${row[0]}</td>${[row[1],row[2],row[1]-row[2]].map(v=>`<td class="person">${format(v)}</td>`).join('')}${row.slice(3,5).map(v=>`<td class="ease">${format(v)}</td>`).join('')}${[row[5],row[6],row[5]-row[6]].map(v=>`<td class="finished">${format(v)}</td>`).join('')}</tr>`).join('')}
+  function renderRows(target,values){document.querySelector(target).innerHTML=values.map(row=>`<tr><td>${row[0]}${target==='#moeiRows'?panisaLabel(row[0]):''}</td>${[row[1],row[2],row[1]-row[2]].map(v=>`<td class="person">${format(v)}</td>`).join('')}${row.slice(3,5).map(v=>`<td class="ease">${format(v)}</td>`).join('')}${[row[5],row[6],row[5]-row[6]].map(v=>`<td class="finished">${format(v)}</td>`).join('')}</tr>`).join('')}
   function render(){renderRows('#rows',data);renderRows('#moeiRows',moeiData)}
   document.querySelectorAll('.switch button').forEach(button=>button.addEventListener('click',()=>{unit=button.dataset.unit;document.querySelectorAll('.switch button').forEach(item=>item.classList.toggle('active',item===button));render()}));
   const pair=value=>value.toFixed(1)+' ซม.<br><small style="color:var(--muted)">'+(value/2.54).toFixed(2)+' นิ้ว</small>';
